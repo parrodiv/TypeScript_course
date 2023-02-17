@@ -1,0 +1,15 @@
+STRONGLY TYPED LANGUAGES
+  they are languages that demand the specification of types, such as TYPESCRIPT
+
+LOOSELY TYPED LANGUAGES
+  they are languages that do not require type specification, such as JAVASCRIPT
+
+They relates to:
+- Static Typing
+- Dynamic Typing
+- But it is not the same
+
+A language that is strongly typed can be EITHER statically OR dynamically typed!
+
+TYPESCRIPT is a statically typed language: this means types are checked at compile time
+JAVASCRIPT is a dinamically typed language: this means types are checked at run time
