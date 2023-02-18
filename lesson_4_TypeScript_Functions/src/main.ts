@@ -1,141 +1,132 @@
-let stringArr = ['one', 'hey', 'Dave']
+// Type Aliases
+// Rapresent typesctipt types with different name
+type stringOrNumber = string | number
 
-// union type
-let guitars = ['Strat', 'Les Paul', 5150]
+type stringOrNumberArray = (string | number)[]
 
-// union type
-let mixedData = ['EVH', 1984, true]
-
-stringArr[0] = 'John'
-stringArr.push('hey')
-
-guitars[0] = 10
-// Typescript allows to add without taking care about position (guitars has a string parameter at [2] position)
-guitars.unshift('Jim')
-
-// This doesn't work because stringArr accepts only strings and guitars contains also numbers
-// * stringArr = guitars
-
-let test = []
-let bands: string[] = []
-bands.push('Van Halen')
-
-// TUPLE is a strict array with a specific length and specific type in one element position
-let myTuple :[string, number, boolean] = ['Ale', 42, true]
-
-let mixed = ['John', 1, false]
-
-// this is ok because mixed accepts strings, numbers and boolean
-mixed = myTuple
-
-// this doesn't work becuase myTuple has specific element position types
-// * myTuple = mixed
-
-// this is ok because at position 1 it accepts a number type
-myTuple[1] = 2
-
-// OBJECTS
-let myObj: object
-myObj = []
-console.log(typeof myObj) // object
-myObj = bands  //it's ok even though bands is an array
-myObj = {}
-
-// OBJECT TYPE INTERFACE
-const exampleObj = {
-  prop1: 'Dave',
-  prop2: true,
-}
-
-exampleObj.prop1 = 'John'
-
-// OBJECT TYPE ANNOTATION
 type Guitarist = {
-  name: string,
-  active: boolean,
-  albums: (string | number)[]
+  name?: string
+  active: boolean
+  albums: stringOrNumberArray
 }
 
-// Object assignment (correct)
-let evh: Guitarist = {
-  name: 'Eddie',
-  active: false,
-  albums: [1984, 5150, 'aaa']
+type UserId = stringOrNumber
+
+// It doesn't work with interface
+// * interface PostId = stringOrNumber
+
+// LITERAL TYPES
+let myName: 'Ale'
+
+// it expects to be 'Ale' instead John, so it throws an error
+// * myName = 'John'
+
+let userName: 'Dave' | 'John' | 'Amy'
+userName = 'Amy'
+
+//FUNCTIONS
+// returns a number
+const add = (a: number, b: number): number => {
+  return a + b
 }
 
-// Object assignment (incorrect)
-// * let someGuitarist: Guitarist = {
-// *  name: 'john',
-// *  // it is incorrect because it miss the active prop ("Property 'active' is missing in type '{ name: string; albums: string[]; }' but required in type 'Guitarist'.")
-// *  albums: ['I', 'II', 'III']
-// * }
-
-
-// OPTIONAL OBJECT PROPERTY
-type ObjWithOptional = {
-  name: string,
-  age?: number
+// void is the type for functions that don't return anything
+const logMsg = (message: any): void => {
+  console.log(message)
 }
 
-// This is ok because age property can be (number | undefined)
-let person: ObjWithOptional = {
-  name: 'Ale'
+logMsg('Hello')
+logMsg(add(2, 3))
+
+// function keyword
+let subtract = function (c: number, d: number): number {
+  return c - d
 }
 
-// OBJECT TYPE AS A PARAMETER
-const greetingGuitartist = (guitarist: Guitarist) => {
-  return `Hello ${guitarist.name}!`
+// Function type Aliases
+// ! REMEMBER that you cannot add default values to Function type aliases or Function interfaces
+// * type mathFunction = (a: number, b: number) => number
+
+// Function Interface works the same as the function type above
+interface mathFunction {
+  (a: number, b: number): number
 }
 
-console.log(greetingGuitartist(evh))
-
-
-// TYPE VS INTERFACE
-// the structure is the same except without the equal assign operator
-// the question is when to use type and when to use interface
-// interface is more used when you need to define a class 
-interface Songer {
-  name?: string, // this is optional for showing the example about NARROWING WITH OPTIONAL PROPERTIES
-  active: boolean,
-  albums: (string | number)[]
-} 
-
-// NARROWING WITH OPTIONAL PROPERTIES
-// it is a trick of TypeScrypt to avoid errors regarding possible undefined values
-
-let songerObj: Songer = {
-  name: 'Karl',
-  active: true,
-  albums: [1,2,3]
+let multiply: mathFunction = (c, d) => {
+  return c * d
 }
 
-// when adding a method toUpperCase() TS adds <?.> operator to avoid error when name is undefined
-// remember that ?. returns undefined directly without throws any errors about trying to access a property of undefined
-const greetSonger = (songer: Songer) => {
-  return `Hello ${songer.name?.toUpperCase()}` 
+logMsg(multiply(2, 3))
+
+// optional parameters
+// ! REMEMBER that the optional parameters need to be the last in the list!
+const addAll = (a: number, b: number, c?: number): number => {
+  // type guard
+  if (typeof c !== 'undefined') {
+    return a + b + c
+  }
+  return a + b
 }
 
-console.log(greetSonger(songerObj))
-
-
-// ENUMS
-// Unlike most Typescript features, Enums are not a type-level addition to JavaScript but something added to the language and runtime
-
-enum Grade {
-  U, // 0
-  D, // 1
-  C, // 2
-  B, // 3
-  A, // 4
-}
- 
-console.log(Grade.U)
-
-enum Steps {
-  A = 1,
-  B, // 2
-  C, // 3
-  D // 4
+// default param value
+const sumAll = (a: number, b: number, c: number = 2): number => {
+  // type guard
+  if (typeof c !== 'undefined') {
+    return a + b + c
+  }
+  return a + b
 }
 
-console.log(Steps.D)
+logMsg(addAll(2, 3, 2)) // 7
+logMsg(addAll(2, 3)) // 5
+logMsg(sumAll(2, 3)) // 7 because c is set to default value 2
+
+const sumAll2 = (a: number = 10, b: number, c: number = 2): number => {
+  // type guard
+  if (typeof c !== 'undefined') {
+    return a + b + c
+  }
+  return a + b
+}
+
+logMsg(sumAll2(undefined, 3)) // returns 15 because a is set to default value 10, to skip you should put undefined as the first argument
+
+// Rest Parameters
+// in the parameter specify the array of numbers, but when you call the function put the numbers without array
+// ! REMEMBER with the rest operator must be the last parameter on the list (a, b, ...nums)
+const total = (...nums: number[]): number => {
+  return nums.reduce((prev, curr) => prev + curr)
+}
+
+logMsg(total(1, 2, 3, 4))
+
+// Never type
+// 1 - never type is for functions that explicitly throw errors & 2 - for infinite loops
+const createError = (errMsg: string): never => {
+  throw new Error(errMsg)
+}
+
+const infinite = () => {
+  let i: number = 1
+  while (true) {
+    i++
+    // if I break the loop it will return a void type
+    if (i > 10) break
+  }
+}
+
+// custom type guard
+const isNumber = (value: any): boolean => {
+  return typeof value === 'number' ? true : false
+}
+
+// using never type
+// I cannot just put "return" of the function because the return type is set to a string and not undefined
+// returning an error is useful in this situations because it returns a never type
+const numberOrString = (value: number | string): string => {
+  if (typeof value === 'string') return 'string'
+  if (isNumber(value)) return 'number'
+  return createError('This should never happen!')
+}
+
+logMsg(numberOrString(7))
