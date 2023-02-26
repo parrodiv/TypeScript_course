@@ -116,3 +116,35 @@ console.log(Steve.id) //2
 console.log(Amy.id) //3
 
 //************************************************** */
+
+class Bands {
+  private dataState: string[]
+
+  constructor() {
+    this.dataState = []
+  }
+
+  //"get" is a special keyword that we can use in JS to get our data that we have inside our state
+  public get data(): string[]{
+    return this.dataState
+  }
+
+  public set data(value: string[]) {
+    if(Array.isArray(value) && value.every(item => typeof(item) === 'string')){
+      this.dataState = value
+      return
+    } else {
+      throw new Error('Param is not an array of strings')
+    }
+  }
+}
+
+const MyBands = new Bands()
+//set data
+MyBands.data = ['Neil Young', 'Led Zep']
+// get data
+console.log(MyBands.data)
+MyBands.data = [...MyBands.data, 'ZZ Top']
+console.log(MyBands.data)
+// this will give an error because data must be array of strings
+// * MyBands.data= 'Ciao'
