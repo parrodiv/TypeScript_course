@@ -63,3 +63,27 @@ class WebDev extends CoderDry {
 
 const Jack = new WebDev('Mac', 'Jack', 'Lofi', 25)
 console.log(Jack.getLang())
+//*********************************************************************************** */
+
+interface Musician {
+  name: string,
+  instrument: string,
+  play(action: string): string
+}
+
+class Guitarist implements Musician {
+  name: string
+  instrument: string
+
+  constructor(name: string, instrument: string) {
+    this.name = name
+    this.instrument = instrument
+  }
+
+  play(action: string){
+    return `${this.name} ${action} the ${this.instrument}`
+  }
+}
+
+const Page = new Guitarist('Karl', 'guitar')
+console.log(Page.play('strums'))

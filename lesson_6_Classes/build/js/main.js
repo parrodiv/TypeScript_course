@@ -46,3 +46,14 @@ class WebDev extends CoderDry {
 }
 const Jack = new WebDev('Mac', 'Jack', 'Lofi', 25);
 console.log(Jack.getLang());
+class Guitarist {
+    constructor(name, instrument) {
+        this.name = name;
+        this.instrument = instrument;
+    }
+    play(action) {
+        return `${this.name} ${action} the ${this.instrument}`;
+    }
+}
+const Page = new Guitarist('Karl', 'guitar');
+console.log(Page.play('strums'));
