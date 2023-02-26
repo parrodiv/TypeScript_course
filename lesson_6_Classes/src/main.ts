@@ -87,3 +87,32 @@ class Guitarist implements Musician {
 
 const Page = new Guitarist('Karl', 'guitar')
 console.log(Page.play('strums'))
+//********************************************************************* */
+
+class Peeps {
+  static count: number = 0
+  // static methods are called directly on the class without creating an instance/object of the class
+
+  static getCount(): number {
+    return Peeps.count
+  }
+
+  public id: number
+
+  constructor(public name: string) {
+    this.name = name
+    this.id = ++Peeps.count
+     // ++ before means that the increment operator increments and returns the value after incrementing. if count is 0 it returns 1
+  }
+}
+
+const John = new Peeps('John')
+const Steve = new Peeps('Steve')
+const Amy = new Peeps('Amy')
+
+console.log(Peeps.count)
+console.log(John.id) //1
+console.log(Steve.id) //2
+console.log(Amy.id) //3
+
+//************************************************** */
