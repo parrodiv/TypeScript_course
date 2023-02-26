@@ -8,7 +8,7 @@
 
 
 interface TransactionObj {
-  [index: string]: number // INDEX SIGNATURE
+  readonly [index: string]: number // INDEX SIGNATURE
 }
 
 // interface TransactionObj {
@@ -44,5 +44,5 @@ const todaysNet = (transactions: TransactionObj): number => {
 
 console.log(todaysNet(todayTransactions))
 
-
-console.log(todayTransactions.Pizza = 20) //20
+// if there is "readonly" before [index] it can't be reassigned
+// console.log(todayTransactions.Pizza = 20)

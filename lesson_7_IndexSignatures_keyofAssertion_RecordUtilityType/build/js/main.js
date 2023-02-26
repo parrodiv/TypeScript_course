@@ -27,4 +27,5 @@ const todaysNet = (transactions) => {
     return total;
 };
 console.log(todaysNet(todayTransactions));
-console.log(todayTransactions.Pizza = 20); //20
+// if there is "readonly" before [index] it can't be reassigned
+// console.log(todayTransactions.Pizza = 20)
