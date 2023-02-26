@@ -22,7 +22,7 @@ const addOrConcat = (a: number, b: number, c: 'add' | 'concat'): string | number
 // * let myVal: string = addOrConcat(2, 2, 'concat')
 
 // to see type assertion in action and resolve the error above: 
-let myVal : string = addOrConcat(2, 2, 'concat') as string
+let myVal : string = addOrConcat(2, 2, 'add') as string
 
 // ! BE CAREFUL because TS sees no problem here but a string is returned instead of number
 let nextVal: number = addOrConcat(2, 2, 'concat') as number

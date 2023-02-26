@@ -14,7 +14,7 @@ const addOrConcat = (a, b, c) => {
 // this give an error because addOrConcat returns number or string but myVal is expected to be only a string
 // * let myVal: string = addOrConcat(2, 2, 'concat')
 // to see type assertion in action and resolve the error above: 
-let myVal = addOrConcat(2, 2, 'concat');
+let myVal = addOrConcat(2, 2, 'add');
 // ! BE CAREFUL because TS sees no problem here but a string is returned instead of number
 let nextVal = addOrConcat(2, 2, 'concat');
 // double casting
