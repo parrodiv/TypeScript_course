@@ -28,6 +28,21 @@ class CoderDry {
     }
 }
 const Ale = new CoderDry('Ale', 'Rock', 27);
-console.log(Ale.getAge());
+// console.log(Ale.getAge())
 // console.log(Ale.age)
 // console.log(Ale.lang)
+class WebDev extends CoderDry {
+    constructor(computer, name, music, age) {
+        // super extends properties from the parent Class and must be before the other properties
+        super(name, music, age);
+        this.computer = computer;
+        this.computer = computer;
+    }
+    getLang() {
+        return `I write ${this.lang}`;
+        // I can access to lang because lang has a default value "TypeScript"
+        // I can access to lang also because I'm in a subclass of CoderDry since that lang has protected visibility
+    }
+}
+const Jack = new WebDev('Mac', 'Jack', 'Lofi', 25);
+console.log(Jack.getLang());

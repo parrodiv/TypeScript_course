@@ -1,4 +1,3 @@
-
 // class example without visibility modifiers
 class Coder {
   name: string
@@ -6,12 +5,7 @@ class Coder {
   age: number
   lang: string
 
-  constructor(
-    name: string,
-    music: string,
-    age: number,
-    lang: string
-    ) {
+  constructor(name: string, music: string, age: number, lang: string) {
     this.name = name
     this.music = music
     this.age = age
@@ -21,31 +15,51 @@ class Coder {
 
 // class example with visibility modifiers
 class CoderDry {
-  
   // without "!"  it gives an error. With the "!" means that I'm just not going to initialize this right away
   secondLang!: string
 
   constructor(
     public readonly name: string, // readonly means that this property can't be modified
     public music: string,
-    private age: number,  //private means that it can only be accessed inside of this class
-    protected lang: string = 'Typescript'  //protected means that it can also be accessed inside derived classes (if I extend to a subclass)
-  ){
+    private age: number, //private means that it can only be accessed inside of this class
+    protected lang: string = 'Typescript' //protected means that it can also be accessed inside derived classes (if I extend to a subclass)
+  ) {
     this.name = name
     this.music = music
     this.age = age
     this.lang = lang
   }
 
-  public getAge(){
+  public getAge() {
     return `Hello, I'm ${this.age}`
   }
 }
 
 const Ale = new CoderDry('Ale', 'Rock', 27)
 
-console.log(Ale.getAge())
+// console.log(Ale.getAge())
 
 // console.log(Ale.age)
 // console.log(Ale.lang)
 
+class WebDev extends CoderDry {
+  constructor(
+    public computer: string,
+    name: string,
+    music: string,
+    age: number,
+  ) {
+    // super extends properties from the parent Class and must be before the other properties
+    super(name, music, age)
+    this.computer = computer
+  }
+
+  public getLang() {
+    return `I write ${this.lang}`
+    // I can access to lang because lang has a default value "TypeScript"
+    // I can access to lang also because I'm in a subclass of CoderDry since that lang has protected visibility
+  }
+}
+
+const Jack = new WebDev('Mac', 'Jack', 'Lofi', 25)
+console.log(Jack.getLang())
