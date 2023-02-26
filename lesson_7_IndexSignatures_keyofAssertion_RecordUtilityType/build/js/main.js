@@ -29,3 +29,9 @@ const todaysNet = (transactions) => {
 console.log(todaysNet(todayTransactions));
 // if there is "readonly" before [index] it can't be reassigned
 // console.log(todayTransactions.Pizza = 20)
+// Non existing properties returns undefined
+// because it has no way to know what names we would give the keys
+// because rememeber our interface just says it's going to be an index of string and it should return a number
+// so TypeScript really thinks this is going to return a number but it's going to be undefined
+// this does open up the possibility for you to try to access a key on an object that does not exist
+console.log(todayTransactions['Ale']); // UNDEFINED
