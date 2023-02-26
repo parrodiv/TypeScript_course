@@ -6,11 +6,16 @@
 
 // 2- Typescript requires an index signature if you attempt to access an object property dinamically
 
+
 interface TransactionObj {
-  Pizza: number
-  Books: number
-  Job: number
+  [index: string]: number // INDEX SIGNATURE
 }
+
+// interface TransactionObj {
+//   Pizza: number
+//   Books: number
+//   Job: number
+// }
 
 const todayTransactions: TransactionObj = {
   Pizza: -10,
@@ -23,10 +28,10 @@ console.log(todayTransactions['Pizza'])  // -10
 
 let prop: string = 'Pizza'
 
-// * This is not possible with TypeScript
-// console.log(todayTransactions[prop]) 
+// Now it works
+console.log(todayTransactions[prop]) 
 
-// * Also this give us an error 
+// Now it works
 const todaysNet = (transactions: TransactionObj): number => {
   let total = 0
   for (const transaction in transactions) {
@@ -38,3 +43,6 @@ const todaysNet = (transactions: TransactionObj): number => {
 }
 
 console.log(todaysNet(todayTransactions))
+
+
+console.log(todayTransactions.Pizza = 20) //20

@@ -1,6 +1,11 @@
 "use strict";
 // Index Signature
 // Two main reasons why Index Signature are useful:
+// interface TransactionObj {
+//   Pizza: number
+//   Books: number
+//   Job: number
+// }
 const todayTransactions = {
     Pizza: -10,
     Books: -5,
@@ -8,3 +13,18 @@ const todayTransactions = {
 };
 console.log(todayTransactions.Pizza); // -10
 console.log(todayTransactions['Pizza']); // -10
+let prop = 'Pizza';
+// Now it works
+console.log(todayTransactions[prop]);
+// Now it works
+const todaysNet = (transactions) => {
+    let total = 0;
+    for (const transaction in transactions) {
+        total += transactions[transaction]; // * <--- here
+        // Err: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'TransactionObj'.
+        // No index signature with a parameter of type 'string' was found on type 'TransactionObj'
+    }
+    return total;
+};
+console.log(todaysNet(todayTransactions));
+console.log(todayTransactions.Pizza = 20); //20
