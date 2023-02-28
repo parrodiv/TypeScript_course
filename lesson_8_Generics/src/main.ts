@@ -36,3 +36,21 @@ console.log(isTrue('false'))
 console.log(isTrue(null))
 console.log(isTrue(undefined))
 console.log(isTrue({}))
+
+
+interface BoolCheck<T> {
+  value: T,
+  is: boolean
+}
+
+const checkBoolVal = <T>(arg: T): BoolCheck<T> => {
+  if (Array.isArray(arg) && !arg.length) {
+    return { value: arg, is: false }
+  }
+  if (isObj(arg) && !Object.keys(arg as keyof T).length) {
+    // console.log(!Object.keys(arg as keyof T).length)
+    return { value: arg, is: false }
+  }
+  return { value: arg, is: !!arg }
+  // '!!' transform one value in boolean (for example if I pass 0 it will be false, an empty string it will be false and so on)
+}
