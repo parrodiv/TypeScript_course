@@ -54,3 +54,16 @@ const checkBoolVal = <T>(arg: T): BoolCheck<T> => {
   return { value: arg, is: !!arg }
   // '!!' transform one value in boolean (for example if I pass 0 it will be false, an empty string it will be false and so on)
 }
+
+interface HasID {
+  id: number
+}
+
+// narrowing Generic with extends
+// now what we pass in user has to have an id property
+const processUser = <T extends HasID>(user: T): T => {
+  return user
+}
+
+console.log(processUser({id: 1, name: 'Ale'}))
+// console.log(processUser({ name: 'Ale'})) // * Error
