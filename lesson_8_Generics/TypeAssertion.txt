@@ -1,0 +1,4 @@
+Sometimes you will have information about the type of a value that TypeScript can't know about
+For example when we work with the DOM
+Assertion is simply telling the TypeScript compiler that you know more about the types so it needs to listen to you
+because you have a little more detail than what TypeScript might infer or know about 
