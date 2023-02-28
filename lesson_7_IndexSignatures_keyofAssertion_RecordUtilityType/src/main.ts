@@ -93,5 +93,63 @@ Object.keys(student).map(key => {
   console.log(student[key as keyof typeof student])
 })
 
+// EXAMPLE WITH FUNCTIONS
+const logStudentKey = (student: Student, key: keyof Student): void => {
+  console.log(`Student ${key}: ${student[key]}`)
+}
+
+logStudentKey(student, 'GPA')
+
+//******************************************************************* */
+
+// RECORD UTILITY TYPES
+// The main Syntax for the record type looks like this:
+
+// Record<Keys, Type>
+
+type Streams = 'salary' | 'bonus' | 'sidehustle'
+
+type Incomes = Record<Streams, number | string>
+
+// Incomes is a type that has Streams keys and their values can be number or string
+
+const monthlyIncomes: Incomes = {
+  salary: 500,
+  bonus: 100,
+  sidehustle: 250
+}
+
+// for loop with Record Utility Types
+for (const revenue in monthlyIncomes) {
+  console.log(monthlyIncomes[revenue as keyof Incomes])
+}
+
+// The principle advantage of using Record Utility type is that I can put a string literal option inside a key of an object, while I can't with Index Signature, for example: 
+
+// ! this gives error
+// interface Incomes2 {
+//   [key: 'salary']: number
+// }
+
+// other example
+interface User {
+  id: number
+  firstname: string
+  lastname: string
+  age?: number
+}
+
+const users: Record<number, User> = {
+  0: { id: 1, firstname: 'Chris', lastname: 'Bongers' },
+  1: { id: 2, firstname: 'Yaatree', lastname: 'Bongers', age: 2 },
+}
 
 
+type Admins = 'chris' | 'nicole'
+
+// we want to ensure we can only assign these keys to our list of admin users.
+
+const adminUsers: Record<Admins, User> = {
+  chris: { id: 1, firstname: 'Chris', lastname: 'Bongers' },
+  nicole: { id: 2, firstname: 'Nicole', lastname: 'Bongers' },
+}

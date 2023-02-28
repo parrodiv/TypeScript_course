@@ -44,3 +44,27 @@ for (const key in student) {
 Object.keys(student).map(key => {
     console.log(student[key]);
 });
+// EXAMPLE WITH FUNCTIONS
+const logStudentKey = (student, key) => {
+    console.log(`Student ${key}: ${student[key]}`);
+};
+logStudentKey(student, 'GPA');
+// Incomes is a type that has Streams keys and their values can be number or string
+const monthlyIncomes = {
+    salary: 500,
+    bonus: 100,
+    sidehustle: 250
+};
+// for loop with Record Utility Types
+for (const revenue in monthlyIncomes) {
+    console.log(monthlyIncomes[revenue]);
+}
+const users = {
+    0: { id: 1, firstname: 'Chris', lastname: 'Bongers' },
+    1: { id: 2, firstname: 'Yaatree', lastname: 'Bongers', age: 2 },
+};
+// we want to ensure we can only assign these keys to our list of admin users.
+const adminUsers = {
+    chris: { id: 1, firstname: 'Chris', lastname: 'Bongers' },
+    nicole: { id: 2, firstname: 'Nicole', lastname: 'Bongers' },
+};
