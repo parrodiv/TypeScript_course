@@ -30,4 +30,17 @@ const student = {
     GPA: 3.5,
     classes: [100, 200]
 };
-console.log(student.test);
+// without [key: index] .... this give an error, with [key: string] it doesn't give an error because undefined is one of the possible values
+// console.log(student.test)
+// keyof Assertions is useful when there isn't index signature in interface (now commented out on interface Student)
+// what the keyof does is creates a union type and union type is the specific string literal 
+// in this case is the union type for the name, GPA and classes
+// "name" | "GPA" | "classes"
+for (const key in student) {
+    console.log(`${key}: ${student[key]}`);
+}
+// When I don't know what the types of student object (the interface) are
+// note the lower case student not the upper case Student
+Object.keys(student).map(key => {
+    console.log(student[key]);
+});
