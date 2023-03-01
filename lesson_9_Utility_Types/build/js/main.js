@@ -11,7 +11,7 @@ const assign1 = {
 };
 console.log(updateAssignment(assign1, { grade: 95 }));
 const assignGraded = updateAssignment(assign1, { grade: 95 });
-// Required and Readonly
+// REQUIRED and READONLY
 // * Required specify that it requires all of the property, also those that are set as optional
 const recordAssignment = (assign) => {
     // send to database, etc.
@@ -20,5 +20,20 @@ const recordAssignment = (assign) => {
 const assignVerified = Object.assign(Object.assign({}, assignGraded), { verified: true });
 // * Readonly can not be modified
 // assignVerified.grade = 88
-//recordAssingment requires all props 
+//recordAssingment requires all props
 console.log(recordAssignment(Object.assign(Object.assign({}, assignGraded), { verified: true })));
+// RECORD
+const hexColorMap = {
+    // * Record<keyType, valueType>
+    red: 'FF0000',
+    green: '00FF00',
+    blue: '0000FF',
+};
+const finalGrades = {
+    Sara: 'B',
+    Kelly: 'A',
+};
+const gradeData = {
+    Sara: { assign1: 85, assign2: 93 },
+    Kelly: { assign1: 60, assign2: 90 },
+};
