@@ -70,3 +70,35 @@ const gradeData: Record<Students, Grades> = {
   Sara: { assign1: 85, assign2: 93 },
   Kelly: { assign1: 60, assign2: 90 },
 }
+
+
+
+// PICK and OMIT
+
+// Pick dà la possibilità di scegliere che parametri utilizzare di un oggetto
+
+type AssignResult = Pick<Assignment, "studentId" | "grade">
+
+const score: AssignResult = {
+  studentId: "Bob",
+  grade: 50
+}
+
+// Omit è l'esatto contrario di Pick
+type AssignPreview = Omit<Assignment, "studentId" | "grade">
+
+const scorePreview: AssignPreview = {
+  title: 'score'
+}
+
+
+// EXCLUDE and EXTRACT
+// They son't work with interface, but only with string literal union types
+// over the mouse on adjustedGrade and highGrades to see results
+
+type adjustedGrade = Exclude<LetterGrades, "U">
+
+type highGrades = Extract<LetterGrades, "A" | "B">
+
+
+
