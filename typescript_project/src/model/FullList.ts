@@ -1,7 +1,7 @@
 import ListItem from './listItem'
 
 interface List {
-  list: ListItem[] // [{_id: string, _item: string, _checked: boolean}, {.....}]
+  list: ListItem[] 
   load(): void
   save(): void
   clearList(): void
@@ -16,7 +16,7 @@ export class FullList implements List {
   // 2) private constructor
   static instance: FullList = new FullList()
 
-  // rendendo privato il costruttore non rendo possibili instanziare questa classe con new FullList
+  // rendendo privato il costruttore non rendo possibile instanziare questa classe con new FullList
   private constructor(private _list: ListItem[] = []) {
     // don't needed the constructor with visibility modifiers
   }
@@ -26,18 +26,19 @@ export class FullList implements List {
   }
 
   load(): void {
+    
     const stringifiedList: string | null = localStorage.getItem('myList') //'[{}, {}, {}]'
     if (typeof stringifiedList !== 'string') return
 
     // ! perchè non è uguale a :ListItem[] 
     // se definisco il tipo come :ListItem[] quando istanzio ListItem non posso accedere ai vari parametri con underscore, essendo essi dichiarati privati, posso solo usare i getters
     // se definisco il tipo :{_id, _item, _checked}[] quando istanzio ListItem posso accedere a _id, _item e _checked siccome sono stati dichiarati come semplice tipo invece che essere privati come nella classe ListItem
-    const parsedList: ListItem[] = JSON.parse(stringifiedList)
+    const parsedList: {_id: string, _item: string, _checked: boolean}[] = JSON.parse(stringifiedList)
     
     console.log(parsedList)
 
     parsedList.forEach((itemObj) => {
-      const newListItem = new ListItem(itemObj.id, itemObj.item, itemObj.checked)
+      const newListItem = new ListItem(itemObj._id, itemObj._item, itemObj._checked)
       FullList.instance.addItem(newListItem)
     })
   }
