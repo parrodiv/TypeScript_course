@@ -1,4 +1,4 @@
-import { FullList } from '../model/FullList'
+import  FullList  from '../model/FullList'
 
 interface DOMList {
   ul: HTMLUListElement
@@ -12,9 +12,11 @@ interface DOMList {
 
 export default class ListTemplate implements DOMList {
 
+  ul: HTMLUListElement
+
   static instance: ListTemplate = new ListTemplate()
 
-  private constructor(public ul: HTMLUListElement) {
+  private constructor() {
     this.ul = document.getElementById('listItems') as HTMLUListElement
   }
 

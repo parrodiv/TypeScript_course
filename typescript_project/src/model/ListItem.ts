@@ -14,9 +14,9 @@ export default class ListItem implements Item {
     private _item: string,
     private _checked: boolean
   ) {
-    this._id = ''
-    this._item = ''
-    this._checked = false
+    this._id = _id
+    this._item = _item
+    this._checked = _checked
   }
 
   get id(): string {
