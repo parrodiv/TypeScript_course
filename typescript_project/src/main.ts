@@ -7,6 +7,8 @@ const initApp = (): void => {
   const fullList = FullList.instance
   const template = ListTemplate.instance
 
+  console.log(fullList.getListItemFromLocalStorage())
+
   const itemEntryForm = document.getElementById(
     'itemEntryForm'
   ) as HTMLFormElement

@@ -68,7 +68,7 @@ export default class FullList implements List {
 
   getListItemFromLocalStorage(): boolean {
     const list = localStorage.getItem('myList')
-    if (list !== undefined) {
+    if (list !== null) {
       return true
     }
 
