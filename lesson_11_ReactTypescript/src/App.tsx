@@ -1,8 +1,10 @@
-
+import Heading from "./components/Heading"
 
 function App() {
  
-  return <h1>Hello</h1>
+  return (
+    <Heading title={"Hello"}/>
+    )
 }
 
 export default App
