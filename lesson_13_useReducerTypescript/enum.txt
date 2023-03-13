@@ -1,0 +1,36 @@
+La differenza principale tra const enum e enum è il modo in cui il compilatore TypeScript elabora l'enum. Quando si utilizza const enum, il compilatore sostituisce ogni occorrenza di una costante dell'enum con il suo valore numerico direttamente nel codice sorgente. In altre parole, il valore numerico della costante dell'enum viene "inlined" nel codice. Ad esempio:
+
+const enum DaysOfWeek {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+}
+
+console.log(DaysOfWeek.Monday); // il compilatore sostituirà questo con console.log(0);
+In questo esempio, il compilatore sostituirà la chiamata console.log(DaysOfWeek.Monday) con console.log(0) direttamente nel codice generato. Ciò significa che non ci sarà alcun oggetto DaysOfWeek durante l'esecuzione del codice, e tutte le occorrenze di DaysOfWeek.Monday verranno sostituite con il valore numerico 0 durante la fase di compilazione.
+
+
+D'altra parte, quando si utilizza enum senza la parola chiave const, il compilatore TypeScript creerà un oggetto separato per l'enum durante l'esecuzione del codice. Ad esempio:
+
+enum DaysOfWeek {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+}
+
+console.log(DaysOfWeek.Monday); // il compilatore NON sostituirà questo con console.log(0);
+
+In questo esempio, l'oggetto DaysOfWeek verrà creato durante l'esecuzione del codice e sarà disponibile per accedere ai valori delle costanti dell'enum. Ciò significa che DaysOfWeek.Monday avrà il valore 0 durante l'esecuzione del codice.
+
+
+In generale, l'utilizzo di const enum può aiutare a ridurre la dimensione del codice generato dal compilatore TypeScript. Tuttavia, poiché l'enum non esiste come oggetto separato durante l'esecuzione del codice, non è possibile accedere ai suoi metodi o proprietà. Se si ha bisogno di utilizzare l'enum come oggetto durante l'esecuzione del codice, si dovrebbe utilizzare la forma di enum senza la parola chiave const.
+
+
