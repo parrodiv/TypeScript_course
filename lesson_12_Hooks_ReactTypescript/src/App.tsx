@@ -2,6 +2,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   MouseEvent,
   KeyboardEvent,
 } from 'react'
@@ -10,6 +11,15 @@ interface User {
   id: string
   username: string
 }
+
+type fibFunc = (n: number) => number
+
+const fib: fibFunc = (n) => {
+  if (n < 2) return n
+  return fib(n - 1) + fib(n - 2)
+}
+
+const myNum: number = 37 
 
 const App = () => {
   const [count, setCount] = useState<number>(0)
@@ -36,10 +46,16 @@ const App = () => {
     []
   )
 
+  //  useMemo
+  // it's scope is to momeize a value that comes in from an expensive function, so every time the component rerenders the value is stored and the calculation is not reprocessed. It will reprocess only when the prop dependency changes
+  const expFuncResult = useMemo<number>(() => fib(myNum), [myNum])
+   // <number> means that the result value that we expect is number, useMemo already recognize implicit type
+
   return (
     <>
       <h1>{count}</h1>
       <button onClick={addTwo}>Add</button>
+      <h2>{expFuncResult}</h2>
     </>
   )
 }
