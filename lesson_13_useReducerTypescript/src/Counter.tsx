@@ -1,14 +1,16 @@
-import { ReactNode, useState, useReducer } from 'react'
+import { ReactNode, useState, useReducer, ChangeEvent } from 'react'
 
-const initState = { count: 0 }
+const initState = { count: 0, text: '' }
 
 const enum REDUCER_ACTION_TYPE {
   INCREMENT,
   DECREMENT,
+  NEW_INPUT,
 }
 
 type ReducerAction = {
   type: REDUCER_ACTION_TYPE
+  payload?: string
 }
 
 const reducer = (
@@ -20,6 +22,9 @@ const reducer = (
       return { ...state, count: state.count + 1 }
     case REDUCER_ACTION_TYPE.DECREMENT:
       return { ...state, count: state.count - 1 }
+    case REDUCER_ACTION_TYPE.NEW_INPUT:
+      return { ...state, text: action.payload ?? '' } // se action.payload è null/undefined restituisci ""
+    // senza il nullish coaleshing operator darebbe errore perchè text potrebbe anche essere undefined ma nell'initState è stato settato come string
     default:
       throw new Error()
   }
@@ -35,6 +40,10 @@ const Counter = ({ children }: ChildrenType) => {
 
   const increment = () => dispatch({ type: REDUCER_ACTION_TYPE.INCREMENT })
   const decrement = () => dispatch({ type: REDUCER_ACTION_TYPE.DECREMENT })
+  const changeText = (e: ChangeEvent<HTMLInputElement>) => dispatch({
+    type: REDUCER_ACTION_TYPE.NEW_INPUT,
+    payload: e.target.value
+  })
 
   return (
     <>
@@ -43,6 +52,8 @@ const Counter = ({ children }: ChildrenType) => {
         <button onClick={increment}>+</button>
         <button onClick={decrement}>-</button>
       </div>
+      <input type="text" onChange={changeText} />
+      <h1>{state.text}</h1>
     </>
   )
 }
