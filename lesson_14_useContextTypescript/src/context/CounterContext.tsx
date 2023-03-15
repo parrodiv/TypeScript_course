@@ -50,3 +50,13 @@ const useCounterContext = (initState: StateType) => {
 
 // grazie all'utility type ReturnType copiamo il return type di useCounterContext
 type UseCounterContextType = ReturnType<typeof useCounterContext>
+
+const initStateContext: UseCounterContextType = {
+  // these are values, not types
+  state: initState,
+  increment: () => {},
+  decrement: () => {},
+  changeText: (e: ChangeEvent<HTMLInputElement>) => {}
+}
+
+export const CounterContext = createContext<UseCounterContextType>(initStateContext)
