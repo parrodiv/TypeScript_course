@@ -1,11 +1,17 @@
-import { createContext, useReducer, ChangeEvent, ReactElement, useCallback} from 'react'
+import {
+  createContext,
+  useReducer,
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+} from 'react'
 
 type StateType = {
   count: number
   text: string
 }
 
-const initState: StateType = { count: 0, text: '' }
+export const initState: StateType = { count: 0, text: '' }
 
 const enum REDUCER_ACTION_TYPE {
   INCREMENT,
@@ -35,15 +41,24 @@ const reducer = (state: StateType, action: ReducerAction): StateType => {
 const useCounterContext = (initState: StateType) => {
   const [state, dispatch] = useReducer(reducer, initState)
 
-  const increment = useCallback(() => dispatch({ type: REDUCER_ACTION_TYPE.INCREMENT }), [])
+  const increment = useCallback(
+    () => dispatch({ type: REDUCER_ACTION_TYPE.INCREMENT }),
+    []
+  )
 
-  const decrement = useCallback(() => dispatch({ type: REDUCER_ACTION_TYPE.DECREMENT }), [])
+  const decrement = useCallback(
+    () => dispatch({ type: REDUCER_ACTION_TYPE.DECREMENT }),
+    []
+  )
 
-  const changeText = useCallback((e: ChangeEvent<HTMLInputElement>) =>
-    dispatch({
-      type: REDUCER_ACTION_TYPE.NEW_INPUT,
-      payload: e.target.value,
-    }), [])
+  const changeText = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) =>
+      dispatch({
+        type: REDUCER_ACTION_TYPE.NEW_INPUT,
+        payload: e.target.value,
+      }),
+    []
+  )
 
   return { state, increment, decrement, changeText }
 }
@@ -56,17 +71,26 @@ const initStateContext: UseCounterContextType = {
   state: initState,
   increment: () => {},
   decrement: () => {},
-  changeText: (e: ChangeEvent<HTMLInputElement>) => {}
+  changeText: (e: ChangeEvent<HTMLInputElement>) => {},
 }
 
-export const CounterContext = createContext<UseCounterContextType>(initStateContext)
+export const CounterContext =
+  createContext<UseCounterContextType>(initStateContext)
 
 type ChildrenType = {
-  children?: ReactElement | undefined
+  children?: ReactElement | ReactElement[] | undefined
+  // se lasciamo solo ReactElement il provider si aspetta un solo children, mentre con ReactElement[] definiamo la possibilità di contenere più children
 }
 
+
+// in App.tsx quando inseriamo: 
+//  <CounterProvider count={initState.count} text={initState.text}>
+// stiamo andando ad assegnare ad ...initState le proprietà che si aspetta da StateType
+//il parametro initState sarà passato come argomento della funzione useCounterContext
+// quindi useCounterContext({count: initState.count, text: initState.text})
 export const CounterProvider = ({
-  children, ...initState
+  children,
+  ...initState
 }: ChildrenType & StateType): ReactElement => {
   return (
     // con useCounterContext passo lo state e tutti i metodi
