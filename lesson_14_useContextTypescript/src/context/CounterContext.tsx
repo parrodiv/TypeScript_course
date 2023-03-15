@@ -4,6 +4,7 @@ import {
   ChangeEvent,
   ReactElement,
   useCallback,
+  useContext,
 } from 'react'
 
 type StateType = {
@@ -82,8 +83,7 @@ type ChildrenType = {
   // se lasciamo solo ReactElement il provider si aspetta un solo children, mentre con ReactElement[] definiamo la possibilità di contenere più children
 }
 
-
-// in App.tsx quando inseriamo: 
+// in App.tsx quando inseriamo:
 //  <CounterProvider count={initState.count} text={initState.text}>
 // stiamo andando ad assegnare ad ...initState le proprietà che si aspetta da StateType
 //il parametro initState sarà passato come argomento della funzione useCounterContext
@@ -93,9 +93,42 @@ export const CounterProvider = ({
   ...initState
 }: ChildrenType & StateType): ReactElement => {
   return (
-    // con useCounterContext passo lo state e tutti i metodi
+    // con useCounterContext passo lo state e i methodi
     <CounterContext.Provider value={useCounterContext(initState)}>
       {children}
     </CounterContext.Provider>
   )
+}
+
+type UseCounterHookType = {
+  count: number
+  increment: () => void
+  decrement: () => void
+}
+
+// CUSTOM HOOKS
+
+export const useCounter = (): UseCounterHookType => {
+  const {
+    state: { count } /*destructure of state*/,
+    increment,
+    decrement,
+  } = useContext(CounterContext)
+  console.log(increment)
+
+  return { count, increment, decrement }
+}
+
+type UseCounterTextHookType = {
+  text: string
+  changeText: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+export const useCounterText = (): UseCounterTextHookType => {
+  const {
+    state: { text },
+    changeText,
+  } = useContext(CounterContext)
+
+  return { text, changeText }
 }
