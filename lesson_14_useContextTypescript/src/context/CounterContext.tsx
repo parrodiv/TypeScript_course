@@ -1,4 +1,4 @@
-import { createContext, useReducer, ChangeEvent } from 'react'
+import { createContext, useReducer, ChangeEvent, ReactElement} from 'react'
 
 type StateType = {
   count: number
@@ -60,3 +60,18 @@ const initStateContext: UseCounterContextType = {
 }
 
 export const CounterContext = createContext<UseCounterContextType>(initStateContext)
+
+type ChildrenType = {
+  children?: ReactElement | undefined
+}
+
+export const CounterProvider = ({
+  children, ...initState
+}: ChildrenType & StateType): ReactElement => {
+  return (
+    // con useCounterContext passo lo state e tutti i metodi
+    <CounterContext.Provider value={useCounterContext(initState)}>
+      {children}
+    </CounterContext.Provider>
+  )
+}
