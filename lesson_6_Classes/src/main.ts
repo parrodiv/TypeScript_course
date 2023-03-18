@@ -102,7 +102,6 @@ class Peeps {
   constructor(public name: string) {
     this.name = name
     this.id = ++Peeps.count
-     // ++ before means that the increment operator increments and returns the value after incrementing. if count is 0 it returns 1
   }
 }
 

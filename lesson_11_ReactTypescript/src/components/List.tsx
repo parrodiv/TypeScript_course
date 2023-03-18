@@ -21,10 +21,13 @@ identities("Ciao", true)
 
 // Generic constraints
 //! This cause error because In this scenario the compiler will not know that T indeed has a .length property, especially given any type can be assigned to T
-function identity<T>(arg: T): T {
-  console.log(arg.length)
-  return arg
-}
+
+// function identity<T>(arg: T): T {
+//   console.log(arg.length)
+//   return arg
+// }
+
+
 
 
 

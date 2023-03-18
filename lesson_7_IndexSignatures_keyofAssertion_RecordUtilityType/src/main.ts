@@ -83,6 +83,7 @@ const student: Student = {
 // what the keyof does is creates a union type and union type is the specific string literal 
 // in this case is the union type for the name, GPA and classes
 // "name" | "GPA" | "classes"
+//Quindi, utilizzando "as keyof", si sta essenzialmente dicendo al compilatore che la variabile "key" deve essere convertita in un tipo "keyof Student", che è unione di tutte le chiavi dell'interfaccia Student, per garantire che solo le chiavi valide siano utilizzate per accedere alle proprietà dell'oggetto student.
 for (const key in student) {
   console.log(`${key}: ${student[key as keyof Student]}`)
 }

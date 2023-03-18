@@ -20,7 +20,7 @@ const fib: fibFunc = (n) => {
   return fib(n - 1) + fib(n - 2)
 }
 
-const myNum: number = 37 
+const myNum: number = 40 
 
 const App = () => {
   const [count, setCount] = useState<number>(0)
@@ -37,7 +37,7 @@ const App = () => {
     console.log({ users })
 
     return () => console.log('unmounting')
-  })
+  }, [])
 
   // memoize a function so every time  the component rerender, the function isn't going to be recreated
   const addTwo = useCallback(() => {
