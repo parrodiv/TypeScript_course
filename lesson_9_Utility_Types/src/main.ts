@@ -193,3 +193,12 @@ type RespType<T> = T extends { data: infer R } ?  R : never
 // ? Cosa significa infer ?
 //infer è una parola chiave che viene utilizzata per definire un tipo di variabile "ottenuto". Ciò significa che il tipo di questa variabile non è noto in anticipo, ma può essere dedotto dal contesto in cui viene utilizzata.
 
+
+const response = {
+  data: 'Hello, world!',
+}
+
+type MyResponse = typeof response
+
+type DataFromResponse = RespType<MyResponse>; // string
+//In questo caso, RespType<MyResponse> infers il tipo della proprietà data dell'oggetto MyResponse, che è string.

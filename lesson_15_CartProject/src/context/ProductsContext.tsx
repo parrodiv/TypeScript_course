@@ -41,7 +41,7 @@ type ChildrenType = {
   children?: ReactElement | ReactElement[]
 }
 
-export const CounterProvider = ({children}: ChildrenType): ReactElement => {
+export const ProductsProvider = ({children}: ChildrenType): ReactElement => {
   const [products, setProducts] = useState<ProductType[]>(initState)
 
   useEffect(() => {
