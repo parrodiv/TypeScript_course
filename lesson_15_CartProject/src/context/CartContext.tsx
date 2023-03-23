@@ -114,9 +114,12 @@ const useCartContext = (initCartState: CartStateType) => {
     return prevValue + cartItem.qty
   }, 0)
 
-  const totalPrice = new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR'}).format(
+  const totalPrice = new Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(
     state.cart.reduce((prevValue, cartItem) => {
-      return prevValue + (cartItem.qty * cartItem.price)
+      return prevValue + cartItem.qty * cartItem.price
     }, 0)
   )
 
@@ -132,34 +135,28 @@ const useCartContext = (initCartState: CartStateType) => {
   return { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart }
 }
 
+export type UseCartContextType = ReturnType<typeof useCartContext>
 
+const initCartStateContext: UseCartContextType = {
+  dispatch: () => {},
+  REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
+  totalItems: 0,
+  totalPrice: '', // perchè la formula Intl.NumberFormat().format() formatterà inserendo anche la valuta e quindi modificherà in string
+  cart: [],
+}
 
+const CartContext =
+  createContext<UseCartContextType>(initCartStateContext)
 
+type ChildrenType = {
+  children?: ReactElement | ReactElement[]
+}
 
+export const CartProvider = ({ children }: ChildrenType) => {
+  <CartContext.Provider value={useCartContext(initCartState)}>
+    {/* il value contiene { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } */}
+    {children}
+  </CartContext.Provider>
+}
 
-
-// type UseCartContextType = ReturnType<typeof useCartContext>
-
-// const initStateContext: UseCartContextType = {
-//   state: initCartState,
-//   addItem: (cartItem: CartItemType) => {},
-//   removeItem: (cartItem: CartItemType) => {},
-//   changeQuantity: (cartItem: CartItemType) => {},
-//   submit: () => {}
-// }
-
-// export const CartContext = createContext<UseCartContextType>(initStateContext)
-
-// type ChildrenType = {
-//   children?: ReactElement | ReactElement[] 
-// }
-
-// export const CartProvider = ({
-//   children
-// }: ChildrenType) => {
-//   return (
-//     <CartContext.Provider value={useCartContext(initCartState)}>
-//       {children}
-//     </CartContext.Provider>
-//   )
-// }
+export default CartContext
