@@ -1,3 +1,5 @@
+import { createContext, ReactElement, useMemo, useReducer } from 'react'
+
 export type CartItemType = {
   sku: string
   name: string
@@ -87,7 +89,7 @@ const reducer = (
         (item) => item.sku !== sku
       )
 
-      return { ...state, cart: [...filteredCartItems, updatedItem]}
+      return { ...state, cart: [...filteredCartItems, updatedItem] }
     }
 
     case REDUCER_ACTION_TYPE.SUBMIT: {
@@ -98,3 +100,66 @@ const reducer = (
       throw new Error()
   }
 }
+
+const useCartContext = (initCartState: CartStateType) => {
+  const [state, dispatch] = useReducer(reducer, initCartState)
+
+  // memorizzare il valore dell'object REDUCER_ACTIONTS_TYPE
+  // così da non causare un render ogni volta che si passa il REDUCER_ACTIONS ad un componente
+  const REDUCER_ACTIONS = useMemo(() => {
+    return REDUCER_ACTION_TYPE
+  }, [])
+
+  const totalItems = state.cart.reduce((prevValue, cartItem) => {
+    return prevValue + cartItem.qty
+  }, 0)
+
+  const totalPrice = new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR'}).format(
+    state.cart.reduce((prevValue, cartItem) => {
+      return prevValue + (cartItem.qty * cartItem.price)
+    }, 0)
+  )
+
+  // ordinare l'ordine degli items nel cart
+  const cart = state.cart.sort((a, b) => {
+    const itemA = Number(a.sku.slice(-4)) // estraggo le ultime 4 cifre
+    const itemB = Number(b.sku.slice(-4))
+    // ordine crescente: se A è minore di B restituisce -1 else 1 indicando la posizione di A rispetto a B
+    return itemA - itemB
+  })
+
+  // dispatch non causerà rerender e neanche REDUCER_ACTIONS grazie a useMemo
+  return { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart }
+}
+
+
+
+
+
+
+
+// type UseCartContextType = ReturnType<typeof useCartContext>
+
+// const initStateContext: UseCartContextType = {
+//   state: initCartState,
+//   addItem: (cartItem: CartItemType) => {},
+//   removeItem: (cartItem: CartItemType) => {},
+//   changeQuantity: (cartItem: CartItemType) => {},
+//   submit: () => {}
+// }
+
+// export const CartContext = createContext<UseCartContextType>(initStateContext)
+
+// type ChildrenType = {
+//   children?: ReactElement | ReactElement[] 
+// }
+
+// export const CartProvider = ({
+//   children
+// }: ChildrenType) => {
+//   return (
+//     <CartContext.Provider value={useCartContext(initCartState)}>
+//       {children}
+//     </CartContext.Provider>
+//   )
+// }
