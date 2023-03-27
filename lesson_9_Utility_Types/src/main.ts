@@ -38,7 +38,7 @@ const recordAssignment = (assign: Required<Assignment>): Assignment => {
 const assignVerified: Readonly<Assignment> = { ...assignGraded, verified: true }
 
 // Readonly can not be modified
-// assignVerified.grade = 88
+// ! assignVerified.grade = 88
 
 //recordAssingment requires all props
 console.log(recordAssignment({ ...assignGraded, verified: true }))

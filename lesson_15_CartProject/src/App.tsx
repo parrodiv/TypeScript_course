@@ -1,16 +1,23 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Cart from './components/Cart'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import ProductsList from './components/ProductsList'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [viewCart, setViewCart] = useState<boolean>(false)
 
-  return (
-    <div className="App">
-     
-    </div>
+  const pageContent = viewCart ? <Cart /> : <ProductsList />
+
+  const content = (
+    <>
+      <Header viewCart={viewCart} setViewCart={setViewCart} />
+      {pageContent}
+      <Footer viewCart={viewCart} />
+    </>
   )
+
+  return content
 }
 
 export default App

@@ -80,7 +80,7 @@ const reducer = (
       )
 
       if (!itemExists) {
-        throw new Error('Item must exist in order to update quantity')
+        throw new Error('Item must exists in order to update quantity')
       }
 
       const updatedItem: CartItemType = { ...itemExists, qty }
@@ -100,6 +100,7 @@ const reducer = (
       throw new Error()
   }
 }
+
 
 const useCartContext = (initCartState: CartStateType) => {
   const [state, dispatch] = useReducer(reducer, initCartState)
