@@ -2,6 +2,7 @@ import useCart from '../hooks/useCart'
 import useProduct from '../hooks/useProducts'
 import { UseProductsContextType } from '../context/ProductsContext'
 import Product from './Product'
+import { ReactElement } from 'react'
 
 const ProductsList = () => {
   const { products } = useProduct()
