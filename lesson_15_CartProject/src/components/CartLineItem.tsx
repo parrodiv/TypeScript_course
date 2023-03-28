@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement } from 'react'
+import { ChangeEvent, memo, ReactElement } from 'react'
 import { CartItemType } from '../context/CartContext'
 import { ReducerAction } from '../context/CartContext'
 import { ReducerActionType } from '../context/CartContext'
@@ -10,16 +10,21 @@ type PropsType = {
 }
 
 const CartLineItem = ({ ...props }: PropsType) => {
-  const img: string = new URL(`../images/${props.item.sku}.jpeg`, import.meta.url)
-    .href
+
+  console.log("rendered")
+
+  const img: string = new URL(
+    `../images/${props.item.sku}.jpeg`,
+    import.meta.url
+  ).href
 
   const lineTotal: number = props.item.qty * props.item.price
 
   const highestQty: number = 20 > props.item.qty ? 20 : props.item.qty + 10
 
   const optionValues: number[] = [...Array(highestQty).keys()].map((i) => i + 1)
-  console.log([...Array(highestQty).keys()]) // parte da 0
-  console.log(optionValues) // parte da 1
+  // console.log([...Array(highestQty).keys()]) // parte da 0
+  // console.log(optionValues) // parte da 1
 
   const options: ReactElement[] = optionValues.map((value) => {
     return (
@@ -88,4 +93,29 @@ const CartLineItem = ({ ...props }: PropsType) => {
   return content
 }
 
-export default CartLineItem
+
+
+function areItemsEqual(
+  { item: prevItem }: PropsType,
+  { item: nextItem }: PropsType
+) {
+  // console.log(Object.keys(prevItem))
+  // ['sku', 'name', 'price', 'qty]
+  return Object.keys(prevItem).every((key) => {
+    return (
+      prevItem[key as keyof CartItemType] ===
+      nextItem[key as keyof CartItemType]
+    )
+  })
+}
+
+const MemoizedCartLineItem = memo<typeof CartLineItem>(CartLineItem, areItemsEqual)
+
+export default MemoizedCartLineItem
+
+// la funzione "areItemsEqual" utilizza il metodo "Object.keys()" per ottenere le chiavi dell'oggetto "prevItem" e poi controlla se ogni valore delle proprietà dell'oggetto "prevItem" corrisponde ai 
+//valori delle stesse proprietà dell'oggetto "nextItem". Se tutte le proprietà degli oggetti "prevItem" e "nextItem" corrispondono, la funzione restituisce "true", altrimenti restituisce "false".
+
+// Infine, la funzione "memo" viene utilizzata per creare un componente "MemoizedCartLineItem" che memorizza in cache il componente originale "CartLineItem" e le sue props. 
+//In questo modo, se le props non cambiano, il componente "MemoizedCartLineItem" restituisce la stessa versione memorizzata in cache, invece di creare un nuovo componente.
+// Ciò migliora le prestazioni del componente, in quanto evita di doverlo ricreare ogni volta che le props cambiano.
