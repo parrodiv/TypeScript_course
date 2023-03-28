@@ -40,7 +40,6 @@ const reducer = (
 
       const { sku, name, price } = action.payload
 
-      debugger
       // filtra tutti i prodotti che sono nel carrello tranne quello che vogliamo modificare
       const filteredCartItems: CartItemType[] = state.cart.filter(
         (item) => item.sku !== sku
