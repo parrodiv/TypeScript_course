@@ -22,7 +22,7 @@ const REDUCER_ACTION_TYPE = {
 
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE
 
-type ReducerAction = {
+export type ReducerAction = {
   type: string
   payload?: CartItemType
 }
