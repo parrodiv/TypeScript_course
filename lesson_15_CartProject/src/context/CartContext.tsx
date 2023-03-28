@@ -40,6 +40,7 @@ const reducer = (
 
       const { sku, name, price } = action.payload
 
+      debugger
       // filtra tutti i prodotti che sono nel carrello tranne quello che vogliamo modificare
       const filteredCartItems: CartItemType[] = state.cart.filter(
         (item) => item.sku !== sku
@@ -49,7 +50,7 @@ const reducer = (
       const itemExists: CartItemType | undefined = state.cart.find(
         (item) => item.sku === sku
       )
-      const qty: number = itemExists ? ++itemExists.qty : 1
+      const qty: number = itemExists ? itemExists.qty++ : 1
 
       const itemAdded: CartItemType = { sku, name, price, qty }
 
@@ -101,7 +102,6 @@ const reducer = (
   }
 }
 
-
 const useCartContext = (initCartState: CartStateType) => {
   const [state, dispatch] = useReducer(reducer, initCartState)
 
@@ -146,18 +146,19 @@ const initCartStateContext: UseCartContextType = {
   cart: [],
 }
 
-const CartContext =
-  createContext<UseCartContextType>(initCartStateContext)
+const CartContext = createContext<UseCartContextType>(initCartStateContext)
 
 type ChildrenType = {
   children?: ReactElement | ReactElement[]
 }
 
-export const CartProvider = ({ children }: ChildrenType) => {
-  <CartContext.Provider value={useCartContext(initCartState)}>
-    {/* il value contiene { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } */}
-    {children}
-  </CartContext.Provider>
+export const CartProvider = ({ children }: ChildrenType): ReactElement => {
+  return (
+    <CartContext.Provider value={useCartContext(initCartState)}>
+      {/* il value contiene { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } */}
+      {children}
+    </CartContext.Provider>
+  )
 }
 
 export default CartContext
