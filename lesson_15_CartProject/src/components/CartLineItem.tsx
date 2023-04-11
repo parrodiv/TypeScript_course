@@ -119,3 +119,5 @@ export default MemoizedCartLineItem
 // Infine, la funzione "memo" viene utilizzata per creare un componente "MemoizedCartLineItem" che memorizza in cache il componente originale "CartLineItem" e le sue props. 
 //In questo modo, se le props non cambiano, il componente "MemoizedCartLineItem" restituisce la stessa versione memorizzata in cache, invece di creare un nuovo componente.
 // Ciò migliora le prestazioni del componente, in quanto evita di doverlo ricreare ogni volta che le props cambiano.
+// Questa funzione di comparazione tra prevItem e nextItem è necessaria per verificare che le keys dell'oggetto item non siano cambiate
+// Se utilizzassimo solo React.memo non otterremmo una validazione delle proprietà innestate di una prop, quindi non riusciremmo a verificare se le prop dell'oggetto item siano effettivamente cambiate
